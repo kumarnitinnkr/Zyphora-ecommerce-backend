@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zyphora_db?createDatabaseIfNotExist=true
+    username: root
+    password: MySQL@123
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    enabled: false
+
+jwt:
+  secret: mySuperSecretKeyForZyphoraJWTToken123456
+  access-expiration: 900000
+  refresh-expiration: 604800000
