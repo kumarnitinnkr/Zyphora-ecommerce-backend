@@ -19,3 +19,8 @@ jwt:
   secret: mySuperSecretKeyForZyphoraJWTToken123456
   access-expiration: 900000
   refresh-expiration: 604800000
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
