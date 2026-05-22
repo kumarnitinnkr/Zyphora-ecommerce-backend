@@ -30,6 +30,15 @@ public class AddressController {
         return repository.save(address);
     }
 
+    @DeleteMapping("/{id}")
+public void delete(@PathVariable Long id) {
+
+    Address address = repository.findById(id)
+            .orElseThrow();
+
+    repository.delete(address);
+}
+
     @GetMapping
     public Object all() {
         return repository.findByUserEmail(email());

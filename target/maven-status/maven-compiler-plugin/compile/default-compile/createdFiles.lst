@@ -28,6 +28,7 @@ com\zyphora\product\entity\Category.class
 com\zyphora\review\controller\ReviewController.class
 com\zyphora\auth\repository\UserRepository.class
 com\zyphora\wishlist\repository\WishlistRepository.class
+com\zyphora\user\service\UserService.class
 com\zyphora\cart\repository\CartRepository.class
 com\zyphora\user\controller\UserController.class
 com\zyphora\seller\controller\SellerController.class

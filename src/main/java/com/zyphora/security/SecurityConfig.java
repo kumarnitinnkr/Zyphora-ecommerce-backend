@@ -39,6 +39,7 @@ public class SecurityConfig {
                         "/api/v1/auth/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
+                        
                 ).permitAll()
 
                 // Allow preflight (important for frontend)
@@ -64,11 +65,12 @@ public class SecurityConfig {
                         .hasRole("ADMIN")
 
                 // ================= USER =================
-                .requestMatchers("/api/v1/user/**")
-                        .hasAnyRole("USER", "ADMIN", "SELLER")
+.requestMatchers("/api/v1/user/**")
+        .permitAll()
 
-                // ================= FALLBACK =================
-                .anyRequest().authenticated()
+// ================= FALLBACK =================
+.anyRequest().authenticated()
+                
             )
 
             // 🔐 JWT Filter
