@@ -2,33 +2,68 @@ package com.zyphora.user.controller;
 
 import com.zyphora.auth.entity.User;
 import com.zyphora.auth.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zyphora.security.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtService     jwtService;
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "User secured API working";
+    // ── GET logged-in user's profile ──────────────────────────────
+    // GET /api/v1/user/me
+    @GetMapping("/me")
+    public Map<String, Object> getMe(
+            @RequestHeader("Authorization") String authHeader) {
+
+        String email = extractEmail(authHeader);
+        User user    = userRepository.findByEmail(email).orElseThrow();
+
+        return Map.of(
+            "id",       user.getId(),
+            "fullName", user.getFullName() != null ? user.getFullName() : "",
+            "email",    user.getEmail(),
+            "role",     user.getRole() != null ? user.getRole().name() : "ROLE_USER",
+            "profilePic", user.getProfilePic() != null ? user.getProfilePic() : ""
+        );
     }
 
+    // ── UPDATE logged-in user's profile ───────────────────────────
+    // PUT /api/v1/user/update
     @PutMapping("/update")
-    public User updateProfile(
-            @RequestBody User updatedUser) {
+    public Map<String, Object> updateProfile(
+            @RequestHeader("Authorization") String authHeader,
+            @RequestBody Map<String, String> body) {
 
-        User user = userRepository
-                .findById(updatedUser.getId())
-                .orElseThrow();
+        String email = extractEmail(authHeader);
+        User user    = userRepository.findByEmail(email).orElseThrow();
 
-        user.setFullName(updatedUser.getFullName());
-        user.setEmail(updatedUser.getEmail());
+        if (body.containsKey("fullName")   && !body.get("fullName").isBlank())
+            user.setFullName(body.get("fullName"));
 
-        return userRepository.save(user);
+        if (body.containsKey("profilePic") && !body.get("profilePic").isBlank())
+            user.setProfilePic(body.get("profilePic"));
+
+        userRepository.save(user);
+
+        return Map.of(
+            "id",         user.getId(),
+            "fullName",   user.getFullName() != null ? user.getFullName() : "",
+            "email",      user.getEmail(),
+            "profilePic", user.getProfilePic() != null ? user.getProfilePic() : ""
+        );
+    }
+
+    // ── helper ────────────────────────────────────────────────────
+    private String extractEmail(String authHeader) {
+        String token = authHeader.replace("Bearer ", "").trim();
+        return jwtService.extractEmail(token);
     }
 }

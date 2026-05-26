@@ -6,6 +6,7 @@ com\zyphora\admin\service\AdminService.class
 com\zyphora\auth\entity\User$UserBuilder.class
 com\zyphora\order\service\OrderService.class
 com\zyphora\security\JwtService.class
+com\zyphora\order\dto\OrderResponse$ProductDto.class
 com\zyphora\auth\dto\AuthResponse.class
 com\zyphora\order\entity\OrderEntity$OrderEntityBuilder.class
 com\zyphora\product\service\ProductService.class
@@ -28,6 +29,8 @@ com\zyphora\product\entity\Category.class
 com\zyphora\review\controller\ReviewController.class
 com\zyphora\auth\repository\UserRepository.class
 com\zyphora\wishlist\repository\WishlistRepository.class
+com\zyphora\notification\service\EmailNotificationService.class
+com\zyphora\order\dto\OrderResponse.class
 com\zyphora\user\service\UserService.class
 com\zyphora\cart\repository\CartRepository.class
 com\zyphora\user\controller\UserController.class
@@ -51,6 +54,7 @@ com\zyphora\security\CustomUserDetailsService.class
 com\zyphora\coupon\entity\Coupon$CouponBuilder.class
 com\zyphora\notification\entity\Notification$NotificationBuilder.class
 com\zyphora\review\entity\Review$ReviewBuilder.class
+com\zyphora\order\dto\OrderResponse$AddressDto.class
 com\zyphora\coupon\entity\Coupon.class
 com\zyphora\review\repository\ReviewRepository.class
 com\zyphora\auth\dto\LoginRequest.class
@@ -58,6 +62,7 @@ com\zyphora\order\entity\Address.class
 com\zyphora\config\CorsConfig.class
 com\zyphora\auth\service\AuthService.class
 com\zyphora\seller\entity\SellerProfile.class
+com\zyphora\order\dto\OrderResponse$ItemDto.class
 com\zyphora\cart\entity\CartItem$CartItemBuilder.class
 com\zyphora\ZyphoraApplication.class
 com\zyphora\notification\repository\NotificationRepository.class

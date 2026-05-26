@@ -43,6 +43,7 @@ C:\Desktop\zyphora_backend\src\main\java\com\zyphora\order\entity\OrderEntity.ja
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\seller\repository\SellerRepository.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\product\entity\Product.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\review\controller\ReviewController.java
+C:\Desktop\zyphora_backend\src\main\java\com\zyphora\notification\service\EmailNotificationService.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\order\repository\AddressRepository.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\product\entity\Category.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\auth\dto\AuthResponse.java
@@ -56,5 +57,6 @@ C:\Desktop\zyphora_backend\src\main\java\com\zyphora\wishlist\controller\Wishlis
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\auth\service\AuthService.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\cart\entity\CartItem.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\config\CorsConfig.java
+C:\Desktop\zyphora_backend\src\main\java\com\zyphora\order\dto\OrderResponse.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\user\service\UserService.java
 C:\Desktop\zyphora_backend\src\main\java\com\zyphora\product\dto\ProductRequest.java

@@ -3,8 +3,6 @@ package com.zyphora.auth.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "users")
 @Getter
@@ -12,7 +10,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class User {
 
     @Id
@@ -28,4 +25,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    // ✅ profile picture — stored as URL or base64 string
+    @Column(columnDefinition = "TEXT")
+    private String profilePic;
 }

@@ -17,67 +17,55 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ Disable CSRF (JWT based)
             .csrf(csrf -> csrf.disable())
-
-            // ❌ Disable session (VERY IMPORTANT for JWT)
             .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-
-            // 🌐 Enable CORS (important for Flutter / frontend)
+                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .cors(cors -> {})
-
             .authorizeHttpRequests(auth -> auth
 
-                // ================= PUBLIC =================
+                // ─── PUBLIC ────────────────────────────────────────────────────────
                 .requestMatchers(
                         "/api/v1/auth/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**"
-                        
                 ).permitAll()
 
-                // Allow preflight (important for frontend)
+                // Allow CORS pre-flight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                // ================= PUBLIC APIs =================
-                .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
+                // ─── PUBLIC READ ────────────────────────────────────────────────────
+                .requestMatchers(HttpMethod.GET,  "/api/v1/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET,  "/api/v1/categories/**").permitAll()
 
-                // ================= PRODUCT SECURITY =================
-                .requestMatchers(HttpMethod.POST, "/api/v1/products")
-                        .hasAnyRole("ADMIN", "SELLER")
+                // ─── CATEGORY MANAGEMENT (ADMIN only) ──────────────────────────────
+                .requestMatchers(HttpMethod.POST,   "/api/v1/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,    "/api/v1/categories/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/categories/**").hasRole("ADMIN")
 
-                // ================= SELLER =================
-                .requestMatchers("/api/v1/seller/apply")
-                        .hasAnyRole("USER", "ADMIN")
+                // ─── PRODUCT MANAGEMENT ────────────────────────────────────────────
+                .requestMatchers(HttpMethod.POST,   "/api/v1/products").hasAnyRole("ADMIN", "SELLER")
+                .requestMatchers(HttpMethod.PUT,    "/api/v1/products/**").hasAnyRole("ADMIN", "SELLER")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/products/**").hasAnyRole("ADMIN", "SELLER")
 
-                .requestMatchers("/api/v1/seller/me")
-                        .hasRole("SELLER")
+                // ─── SELLER ────────────────────────────────────────────────────────
+                // Any authenticated user can apply to become a seller
+                .requestMatchers("/api/v1/seller/apply").authenticated()
+                // Only approved sellers can access their profile
+                .requestMatchers("/api/v1/seller/me").hasRole("SELLER")
 
-                // ================= ADMIN =================
-                .requestMatchers("/api/v1/admin/**")
-                        .hasRole("ADMIN")
+                // ─── ADMIN ─────────────────────────────────────────────────────────
+                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
-                // ================= USER =================
-.requestMatchers("/api/v1/user/**")
-        .permitAll()
+                // ─── USER ──────────────────────────────────────────────────────────
+                .requestMatchers("/api/v1/user/**").permitAll()
 
-// ================= FALLBACK =================
-.anyRequest().authenticated()
-                
+                // ─── FALLBACK ──────────────────────────────────────────────────────
+                .anyRequest().authenticated()
             )
-
-            // 🔐 JWT Filter
-            .addFilterBefore(
-                    jwtFilter,
-                    UsernamePasswordAuthenticationFilter.class
-            );
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
