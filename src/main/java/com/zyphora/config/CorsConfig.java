@@ -2,7 +2,6 @@ package com.zyphora.config;
 
 import org.springframework.context.annotation.*;
 import org.springframework.web.cors.*;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class CorsConfig {
@@ -12,7 +11,7 @@ public class CorsConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("*"); // change in production
+        config.addAllowedOriginPattern("*"); // change in production
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 

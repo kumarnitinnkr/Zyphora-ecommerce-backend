@@ -1,5 +1,9 @@
 server:
+  address: 0.0.0.0
   port: 8080
+
+# server:
+#   port: 8080
 
 spring:
   datasource:
@@ -19,8 +23,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username:        # ← your Gmail address
-    password:         # ← Gmail App Password (not your Gmail login password)
+    username: zyphoraecomm@gmail.com       # ← your Gmail address
+    password: bfez yrps bwrw iwrc         # ← Gmail App Password (not your Gmail login password)
     properties:
       mail:
         smtp:
